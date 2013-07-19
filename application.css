@@ -1,0 +1,14 @@
+body {
+}
+
+.background {
+  fill: #fff;
+}
+
+line {
+  stroke: #fff;
+}
+
+text.active {
+  fill: red;
+}

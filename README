@@ -1,0 +1,16 @@
+HACKING
+=======
+
+# apt-get install libplack-perl
+$ plackup -MPlack::App::Directory -e 'Plack::App::Directory->new->to_app'
+
+Open http://localhost:5000/index.html
+
+DATASET FILE
+============
+
+$ analizo dsm kernel-linux-sources/linux-0.95 > linux-0.95.json
+
+Editei JSON na mao e removi o caminho repetido em cada entrada
+"analizo-datasets/kernel-linux/linux-0.95"
+para simplificar o arquivo e reduzir o seu tamanho.
