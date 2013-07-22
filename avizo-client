@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+use Modern::Perl;
+use AnyEvent;
+use AnyEvent::Handle;
+use AnyEvent::Socket;
+
+=head1 NAME
+
+avizo - connect to avizo socket server
+
+=head1 SYNOPSIS
+
+  avizo <METHOD> <URL>
+
+  avizo GET git://github.com/libgit2/libgit2.git
+
+=cut
+
+if (@ARGV < 2) {
+  die "$0 <METHOD> <ARGS>\n",
+      "eg.:\n",
+      "$0 GET Git git://github.com/libgit2/libgit2.git\n";
+}
+
+my $cv = AnyEvent->condvar;
+
+sub unable_to_connect {
+  warn "unable to connect: $!";
+  $cv->send;
+}
+
+tcp_connect localhost => 34832, sub {
+  my ($fh) = @_ 
+    or return unable_to_connect;
+  my $handle = AnyEvent::Handle->new(
+    fh => $fh,
+    on_eof => sub { print "eof connection\n" },
+    on_error => sub { print "error connection\n" },
+  );
+  $handle->push_write("@ARGV\015\012");
+  $handle->push_read(line => sub {
+    my (undef, $line) = @_;
+    print "$line\n";
+    undef $handle;
+    $cv->send;
+  });
+};
+
+$cv->recv;
