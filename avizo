@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+use Modern::Perl;
+use AnyEvent;
+use AnyEvent::Socket;
+
+=head1 NAME
+
+avizo - connect to avizo socket server
+
+=head1 SYNOPSIS
+
+  avizo <METHOD> <URL>
+
+  avizo GET git://github.com/libgit2/libgit2.git
+
+=cut
+
+unless (@ARGV == 2) {
+  die "$0 <METHOD> <URL>\n",
+      "eg.:\n",
+      "$0 GET git://github.com/libgit2/libgit2.git\n";
+}
+
+my $cv = AnyEvent->condvar;
+tcp_connect localhost => 34832, sub {
+  my ($fh) = @_ or return $cv->send;
+  syswrite $fh, "@ARGV\015\012";
+  $cv->send; # bye bye
+};
+$cv->recv;
