@@ -1,6 +1,5 @@
 package Visualizo::Repository;
 use Mojo::Base 'Mojolicious::Controller';
-
 use Digest::SHA qw(sha1_hex);
 
 sub enqueue {
@@ -17,8 +16,7 @@ sub enqueue {
   # 3) O Visualizo em sí deve evitar ao máximo armazenar informações,
   # se possível ele nem terá um banco de dados.
 
-  # Render template "example/welcome.html.ep" with message
-  $self->render(
+  $self->stash(
     message => 'Aguarde, estamos fazendo download do repositório...',
     url_sha1 => $url_sha1,
   );
