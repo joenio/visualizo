@@ -1,4 +1,0 @@
-Mojolicious
-Digest::SHA
-Time::HiRes
-Plack::Handler::Apache2
