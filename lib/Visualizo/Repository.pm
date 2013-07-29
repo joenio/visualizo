@@ -17,6 +17,11 @@ sub enqueue {
   # 3) O Visualizo em sí deve evitar ao máximo armazenar informações,
   # se possível ele nem terá um banco de dados.
 
+  $self->stash(
+    message => 'Aguarde, estamos fazendo download do repositório...',
+    url_sha1 => $url_sha1,
+  );
+
   # Render template "example/welcome.html.ep" with message
   $self->render(
     message => 'Aguarde, estamos fazendo download do repositório...',
