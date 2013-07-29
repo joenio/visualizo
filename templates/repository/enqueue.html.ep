@@ -1,0 +1,16 @@
+% title 'The URL is on queue...';
+
+%= tag 'div', class => 'progress progress-striped active' => begin
+  <div class='bar' style='width: 60%'></div>
+% end
+
+<p>
+%= $message
+</p>
+
+<p class='footnote muted'>
+<i class="icon-info"></i>
+Você pode consultar o status a qualquer momento através da URL:
+<br/>
+%= link_to "http://localhost/$url_sha1"
+</p>

@@ -10,9 +10,9 @@ avizo - connect to avizo socket server
 
 =head1 SYNOPSIS
 
-  avizo <METHOD> <URL>
+  avizo-client <METHOD> <VCS> <URL>
 
-  avizo GET git://github.com/libgit2/libgit2.git
+  avizo-client FETCH Git git://github.com/libgit2/libgit2.git
 
 =cut
 
@@ -38,6 +38,10 @@ tcp_connect localhost => 34832, sub {
     on_error => sub { print "error connection\n" },
   );
   $handle->push_write("@ARGV\015\012");
+  $handle->push_read(line => sub {
+    my (undef, $line) = @_;
+    print "$line\n";
+  });
   $handle->push_read(line => sub {
     my (undef, $line) = @_;
     print "$line\n";

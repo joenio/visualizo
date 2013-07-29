@@ -1,0 +1,6 @@
+% title 'New repository URL';
+
+%= form_for enqueue => begin
+  %= url_field 'url', autofocus => undef, required => undef, placeholder => 'Digite a URL do repositório',
+  %= submit_button 'Cadastrar repositório', class => 'btn btn-primary btn-block btn-large'
+% end

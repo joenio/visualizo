@@ -1,0 +1,47 @@
+.background {
+  fill: #fff;
+}
+
+line {
+  stroke: #fff;
+}
+
+text.active {
+  fill: red;
+}
+
+.container {
+  width: 600px;
+  height: 500px;
+}
+
+.container * {
+  margin: auto;
+  text-align: center;
+}
+
+#content {
+  margin-top: 40%;
+}
+
+.progress,
+input[type="url"] {
+  width: 98%;
+  height: 2em;
+  font-size: 1.4em;
+}
+
+input[type="submit"].btn {
+  width: 50%;
+  margin-top: 10px;
+}
+
+p {
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+p.footnote {
+  margin-top: 30px;
+  font-size: 0.9em;
+}
