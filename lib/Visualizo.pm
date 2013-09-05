@@ -17,8 +17,20 @@ sub startup {
   my $r = $self->routes;
 
   # Normal route to controller
-  $r->get('/')->to('repository#new_url');
-  $r->get('/enqueue')->to('repository#enqueue');
+  $r->get('/')
+    ->name('home')
+    ->to('repository#new_url');
+
+  $r->get('/enqueue')
+    ->name('enqueue')
+    ->to('repository#enqueue');
+
+  $r->get('/json/:url_sha1/:action')
+    ->to('json#dsm');
+
+  $r->get('/:url_sha1')
+    ->name('visualization')
+    ->to('repository#visualization');
 }
 
 1;

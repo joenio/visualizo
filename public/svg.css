@@ -1,0 +1,34 @@
+.background {
+  fill: #fff;
+}
+
+line {
+  stroke: #fff;
+}
+
+text {
+  display: none;
+}
+
+text.active {
+  display: block;
+  fill: red;
+  font-size: 18px;
+}
+
+svg {
+  display: block;
+  margin: auto;
+}
+
+#controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#informations {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

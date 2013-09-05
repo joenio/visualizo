@@ -1,23 +1,11 @@
-.background {
-  fill: #fff;
-}
-
-line {
-  stroke: #fff;
-}
-
-text.active {
-  fill: red;
+.container * {
+  margin: auto;
+  text-align: center;
 }
 
 .container {
   width: 600px;
   height: 500px;
-}
-
-.container * {
-  margin: auto;
-  text-align: center;
 }
 
 #content {

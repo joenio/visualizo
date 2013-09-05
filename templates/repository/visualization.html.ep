@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=0.4" />
-<title></title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<!--[if IE 7]>
-  <link href="font-awesome/css/font-awesome-ie7.min.css" rel="stylesheet">
-<![endif]-->
-<link href="application.css" rel="stylesheet" media="screen">
-</head>
-<body>
+% title 'Visualizations for repository...';
+% layout 'svg';
+
+<div id="controls">
+  <select id="order">
+    <option value="group">Cluster (arquivos por diretório)</option>
+    <option value="name">Ordem alfabética (nome do diretório/arquivo)</option>
+  </select>
+</div>
+
+<div id="informations">
+  informacoes
+</div>
 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.3/example1/colorbox.min.css" rel="stylesheet">
-
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.5/jquery.scrollTo.min.js"></script>
@@ -23,58 +20,50 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="application.js"></script>
 
-
 <script>
-
-var margin = {top: 80, right: 0, bottom: 10, left: 80},
-    width = 1240,
-    height = 1240;
+var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    width = 700,
+    height = 700;
 
 var x = d3.scale.ordinal().rangeBands([0, width]),
     z = d3.scale.linear().domain([0, 4]).clamp(true),
     c = d3.scale.category10().domain(d3.range(10));
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#content").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//var dataset_filename = "miserables.json";
-var dataset_filename = "linux-0.95.json";
-//var dataset_filename = "linux-1.3.55.json";
+var dataset_filename = "/json/<%= $url_sha1 %>/dsm";
 
-d3.json(dataset_filename, function(miserables) {
+d3.json(dataset_filename, function(dataset) {
   var matrix = [],
-      nodes = miserables.nodes,
+      nodes = dataset.nodes,
       n = nodes.length;
 
   // Compute index per node.
   nodes.forEach(function(node, i) {
     node.index = i;
-    node.count = 0;
     matrix[i] = d3.range(n).map(function(j) { return {x: j, y: i, z: 0}; });
   });
 
-  // Convert links to matrix; count character occurrences.
-  miserables.links.forEach(function(link) {
-    matrix[link.source][link.target].z += link.value;
-    matrix[link.target][link.source].z += link.value;
-    matrix[link.source][link.source].z += link.value;
-    matrix[link.target][link.target].z += link.value;
-    nodes[link.source].count += link.value;
-    nodes[link.target].count += link.value;
+  // Convert links to matrix;
+  dataset.links.forEach(function(link) {
+    matrix[link.source][link.target].z = link.value;
+    matrix[link.target][link.source].z = link.value;
+    matrix[link.source][link.source].z = link.value;
+    matrix[link.target][link.target].z = link.value;
   });
 
   // Precompute the orders.
   var orders = {
     name: d3.range(n).sort(function(a, b) { return d3.ascending(nodes[a].name, nodes[b].name); }),
-    count: d3.range(n).sort(function(a, b) { return nodes[b].count - nodes[a].count; }),
     group: d3.range(n).sort(function(a, b) { return nodes[b].group - nodes[a].group; })
   };
 
   // The default sort order.
-  x.domain(orders.name);
+  x.domain(orders.group);
 
   svg.append("rect")
       .attr("class", "background")
@@ -88,9 +77,6 @@ d3.json(dataset_filename, function(miserables) {
       .attr("transform", function(d, i) { return "translate(0," + x(i) + ")"; })
       .each(row);
 
-  //row.append("line")
-  //    .attr("x2", width);
-
   row.append("text")
       .attr("x", -6)
       .attr("y", x.rangeBand() / 2)
@@ -102,14 +88,11 @@ d3.json(dataset_filename, function(miserables) {
       .data(matrix)
     .enter().append("g")
       .attr("class", "column")
-      .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
-
-  //column.append("line")
-  //    .attr("x1", -width);
+      .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(0)"; });
 
   column.append("text")
       .attr("x", 6)
-      .attr("y", x.rangeBand() / 2)
+      .attr("y", - x.rangeBand() * 4)
       .attr("dy", ".32em")
       .attr("text-anchor", "start")
       .text(function(d, i) { return nodes[i].name; });
@@ -122,26 +105,27 @@ d3.json(dataset_filename, function(miserables) {
         .attr("x", function(d) { return x(d.x); })
         .attr("width", x.rangeBand())
         .attr("height", x.rangeBand())
-        //.style("fill-opacity", function(d) { return z(d.z); })
         .style("fill", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : null; })
         .style("stroke", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : null; })
         .on("mouseover", mouseover)
         .on("mouseout", mouseout);
+
+    cell.append('title')
+      .text(function(d) { return nodes[d.y].name + " → " + nodes[d.x].name; });
   }
 
   function mouseover(p) {
     d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
     d3.selectAll(".column text").classed("active", function(d, i) { return i == p.x; });
+
+    //d3.select('#informacoes').append("p")
+    //.text(function(d) { return nodes[d.x].name + ' -> ' + nodes[d.y].name });
+    //alert(nodes[p.x].name + ' -> ' + nodes[p.y].name);
   }
 
   function mouseout() {
     d3.selectAll("text").classed("active", false);
   }
-
-  //d3.select("#order").on("change", function() {
-  //  clearTimeout(timeout);
-  //  order(this.value);
-  //});
 
   function order(value) {
     x.domain(orders[value]);
@@ -157,18 +141,26 @@ d3.json(dataset_filename, function(miserables) {
 
     t.selectAll(".column")
         .delay(function(d, i) { return x(i) * 4; })
-        .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
+        .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(0)"; });
   }
+
+  d3.select("#order").on("change", function() {
+    //clearTimeout(timeout);
+    order(this.value);
+  });
 
   //var timeout = setTimeout(function() {
   //  order("group");
   //  d3.select("#order").property("selectedIndex", 2).node().focus();
   //}, 5000);
+
+
 });
 
+
+  function zoom() {
+    svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  }
+
+
 </script>
-
-
-</body>
-</html>
-

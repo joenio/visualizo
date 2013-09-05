@@ -10,7 +10,7 @@
 
 <p class='footnote muted'>
 <i class="icon-info"></i>
-Você pode consultar o status a qualquer momento através da URL:
+Você pode consultar o status a qualquer momento através do link:
 <br/>
-%= link_to "http://localhost/$url_sha1"
+%= link_to $url_sha1 => visualization => {url_sha1 => $url_sha1}
 </p>
