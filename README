@@ -1,10 +1,10 @@
 HACKING
 =======
 
-# apt-get install libplack-perl
-$ plackup -MPlack::App::Directory -e 'Plack::App::Directory->new->to_app'
+# apt-get install libmojolicious-perl libdigest-sha-perl
+$ morbo script/visualizo
 
-Open http://localhost:5000/index.html
+Open http://localhost:3000
 
 DATASET FILE
 ============
