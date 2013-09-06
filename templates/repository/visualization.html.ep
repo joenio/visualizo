@@ -12,6 +12,14 @@
   <table>
     <tr><td><strong>Repository:</strong></td></tr>
     <tr><td><%= $url %></tr></td>
+    <tr><td><strong>Total of files:</strong></td></tr>
+    <tr><td><%= $total_files %></tr></td>
+    <tr><td><strong>Total lines of code metric:</strong></td></tr>
+    <tr><td><%= $metrics->{total_loc} %></tr></td>
+    <tr><td><strong>Change cost metric:</strong></td></tr>
+    <tr><td><%= $metrics->{change_cost} %></tr></td>
+    <tr><td><strong>LCOM4 mean metric:</strong></td></tr>
+    <tr><td><%= sprintf("%.2f", $metrics->{lcom4_mean}) %></tr></td>
   </table>
 </div>
 
