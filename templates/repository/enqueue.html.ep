@@ -18,12 +18,22 @@ Você pode consultar o status a qualquer momento através do link:
 </p>
 
 %= javascript begin
-  setTimeout(function() { $('.bar').attr('style', 'width: 40%') },  1000);
-  setTimeout(function() { $('.bar').attr('style', 'width: 90%') },  2000);
+  setTimeout(function() {
+    $('.bar').attr('style', 'width: 40%');
+    $('.message span')
+      .slideUp('slow', function() { $(this).html("Download concluído, analisando o código-fonte...") })
+      .slideDown('slow');
+  }, 2000);
+  setTimeout(function() {
+    $('.bar').attr('style', 'width: 90%');
+    $('.message span')
+      .slideUp('slow', function() { $(this).html("Extraindo métricas, gerando grafo, ...") })
+      .slideDown('slow');
+  }, 4000);
   setTimeout(function() {
     $('.bar').attr('style', 'width: 100%');
     $('.message span')
-      .slideUp('slow', function() { $(this).html("Pronto, download concluído!") })
+      .slideUp('slow', function() { $(this).html('Tudo pronto! Veja: <%= link_to $url_sha1 => visualization => {url_sha1 => $url_sha1} %>') })
       .slideDown('slow');
-  }, 3000);
+  }, 6000);
 % end
