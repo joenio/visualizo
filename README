@@ -5,12 +5,3 @@ HACKING
 $ morbo script/visualizo
 
 Open http://localhost:3000
-
-DATASET FILE
-============
-
-$ analizo dsm kernel-linux-sources/linux-0.95 > linux-0.95.json
-
-Editei JSON na mao e removi o caminho repetido em cada entrada
-"analizo-datasets/kernel-linux/linux-0.95"
-para simplificar o arquivo e reduzir o seu tamanho.
