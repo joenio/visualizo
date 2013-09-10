@@ -12,6 +12,7 @@
     <![endif]-->
     %= stylesheet '/default.css'
     %= stylesheet '/application.css'
+    %= javascript '/jquery.min.js'
   </head>
   <body>
     <div class='container'>

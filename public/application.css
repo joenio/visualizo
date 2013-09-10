@@ -33,3 +33,9 @@ p.footnote {
   margin-top: 30px;
   font-size: 0.9em;
 }
+
+p.message {
+  display: block;
+  height: 1em;
+  text-align: center;
+}

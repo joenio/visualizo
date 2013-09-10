@@ -1,11 +1,13 @@
 % title 'The URL is on queue...';
 
 %= tag 'div', class => 'progress progress-striped active' => begin
-  <div class='bar' style='width: 60%'></div>
+  <div class='bar' style='width: 5%'></div>
 % end
 
-<p>
-%= $message
+<p class='message'>
+<span>
+  %= $message
+</span>
 </p>
 
 <p class='footnote muted'>
@@ -14,3 +16,14 @@ Você pode consultar o status a qualquer momento através do link:
 <br/>
 %= link_to $url_sha1 => visualization => {url_sha1 => $url_sha1}
 </p>
+
+%= javascript begin
+  setTimeout(function() { $('.bar').attr('style', 'width: 40%') },  1000);
+  setTimeout(function() { $('.bar').attr('style', 'width: 90%') },  2000);
+  setTimeout(function() {
+    $('.bar').attr('style', 'width: 100%');
+    $('.message span')
+      .slideUp('slow', function() { $(this).html("Pronto, download concluído!") })
+      .slideDown('slow');
+  }, 3000);
+% end
