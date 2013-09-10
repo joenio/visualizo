@@ -21,7 +21,8 @@ sub visualization {
   my $metrics = CodeJuicer::DB->c('metrics')->find({ _id => $url_sha1 });
   my $metric = $metrics->next;
   my $graphs = CodeJuicer::DB->c('graphs')->find({ _id => $url_sha1 });
-  my $total_files = @{ $graphs->next->{dsm_cluster1}->{nodes} };
+  my $graph = $graphs->next;
+  my $total_files = @{ $graph->{dsm}->{nodes} };
   $self->stash(
     message => 'Visualização do repositório...',
     url_sha1 => $url_sha1,

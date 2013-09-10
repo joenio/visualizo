@@ -3,8 +3,9 @@
 
 <div id="controls">
   <select id="order">
-    <option value="group">Cluster (arquivos por diretório)</option>
-    <option value="name">Ordem alfabética (nome do diretório/arquivo)</option>
+    <option value="name">Ordenar por ordem alfabética</option>
+    <option value="group">Ordenar por grupo (group)</option>
+    <option value="directory">Ordenar por grupo (directory)</option>
   </select>
 </div>
 
@@ -66,11 +67,12 @@ d3.json(dataset_filename, function(dataset) {
   // Precompute the orders.
   var orders = {
     name: d3.range(n).sort(function(a, b) { return d3.ascending(nodes[a].name, nodes[b].name); }),
-    group: d3.range(n).sort(function(a, b) { return nodes[b].group - nodes[a].group; })
+    group: d3.range(n).sort(function(a, b) { return nodes[b].group - nodes[a].group; }),
+    directory: d3.range(n).sort(function(a, b) { return d3.ascending(nodes[a].directory, nodes[b].directory); }),
   };
 
   // The default sort order.
-  x.domain(orders.group);
+  x.domain(orders.name);
 
   svg.append("rect")
       .attr("class", "background")
@@ -118,7 +120,7 @@ d3.json(dataset_filename, function(dataset) {
         .on("mouseout", mouseout);
 
     cell.append('title')
-      .text(function(d) { return nodes[d.y].name + " → " + nodes[d.x].name; });
+        .text(function(d) { return nodes[d.y].name + " → " + nodes[d.x].name });
   }
 
   function mouseover(p) {
