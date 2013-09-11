@@ -152,7 +152,7 @@ d3.json(dataset_filename, function(dataset) {
         .attr("x", function(d) { return x(d.x); });
     t.selectAll(".column")
       .delay(function(d, i) { return x(i) * 4; })
-      .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(0)"; });
+      .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
   }
 
   d3.select("#order").on("change", function() {
