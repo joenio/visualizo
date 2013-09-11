@@ -1,34 +1,27 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
 .background {
-  fill: #fff;
+  fill: #f4f4f4;
+  stroke: #bbb;
 }
 
 line {
   stroke: #fff;
 }
 
-text {
-  display: none;
-}
-
 text.active {
-  display: block;
   fill: red;
-  font-size: 18px;
 }
 
-body {
-  padding: 0;
-  margin: 0;
+svg {
+  display: block;
 }
 
-#controls {
+#sidebar {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-#informations {
-  position: absolute;
-  top: 0;
-  right: 0;
 }
