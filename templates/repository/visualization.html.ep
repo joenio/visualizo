@@ -2,11 +2,15 @@
 % layout 'svg';
 
 <div id="sidebar">
-  <select id="order">
-    <option value="index">Ordenar pelo índice na matriz</option>
-    <option value="name">Ordenar por ordem alfabética</option>
-    <option value="directory">Ordenar por grupo (directory)</option>
-  </select>
+  <div id="toolbar">
+    <select id="order">
+      <option value="index">Ordenar pelo índice na matriz</option>
+      <option value="name">Ordenar por ordem alfabética</option>
+      <option value="directory">Ordenar por grupo (directory)</option>
+    </select>
+
+    <button id='zoom' class='btn btn-block' data-toggle='button' type='button'><i class='icon-zoom-in'></i> ZOOM</button>
+  </div>
 
   <table id="informations">
     <tr><td><strong>Repository:</strong></td></tr>
@@ -20,6 +24,7 @@
     <tr><td><strong>LCOM4 mean metric:</strong></td></tr>
     <tr><td><%= sprintf("%.2f", $metrics->{lcom4_mean}) %></tr></td>
   </table>
+
 </div>
 
 <script>
@@ -40,6 +45,11 @@ var matrix = svg.append("g")
   .attr("width", width)
   .attr("height", height)
   .attr("transform", "translate(" + ($(window).width() - width - margin.right) + "," + margin.top + ")");
+
+var brush = d3.svg.brush()
+  .x(d3.scale.identity().domain([0, width]))
+  .y(d3.scale.identity().domain([0, height]))
+  .extent([[100, 100], [200, 200]]);
 
 var dataset_filename = "/json/<%= $url_sha1 %>/dsm";
 
@@ -167,9 +177,17 @@ d3.json(dataset_filename, function(dataset) {
     order(this.value);
   });
 
-});
+  d3.select("#zoom").on("click", function() {
+    var zoom_is_active = d3.select(this).classed('active');
+    if (zoom_is_active) {
+      d3.select("#brush").remove();
+    }
+    else {
+      matrix.append("g")
+        .attr("id", "brush")
+        .call(brush);
+    }
+  });
 
-function zoom() {
-  matrix.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-}
+});
 </script>

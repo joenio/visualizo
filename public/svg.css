@@ -46,6 +46,10 @@ text.active {
   width: 100%;
 }
 
+#informations {
+  margin-top: 20px;
+}
+
 .callee,
 .caller {
   border: 2px solid gray;
@@ -55,4 +59,10 @@ text.active {
 
 rect.cell {
   stroke-width: 2;
+}
+
+#brush .extent {
+  fill-opacity: .1;
+  stroke: #fff;
+  shape-rendering: crispEdges;
 }
