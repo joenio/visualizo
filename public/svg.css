@@ -45,3 +45,10 @@ text.active {
 #order {
   width: 100%;
 }
+
+.callee,
+.caller {
+  border: 2px solid gray;
+  border-radius: 15px;
+  padding: 5px 10px;
+}
