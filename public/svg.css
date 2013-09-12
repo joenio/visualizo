@@ -32,7 +32,7 @@ text.active {
   fill: red;
 }
 
-rect.active {
+.cell:hover {
   stroke: red;
   stroke-width: 3;
   stroke-opacity: 0.5;
