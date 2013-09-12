@@ -32,4 +32,8 @@ text.active {
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 0;
+  background: #f4f4f4;
+  opacity: 0.8;
+  padding: 10px;
 }
