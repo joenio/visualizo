@@ -13,6 +13,7 @@
     %= stylesheet '/default.css'
     %= stylesheet '/application.css'
     %= javascript '/jquery.min.js'
+    %= javascript '/jquery.tipsy.js'
   </head>
   <body>
     <div class='container'>

@@ -31,6 +31,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.3/jquery.colorbox-min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="application.js"></script>
+<script src="jquery.tipsy.js"></script>
 
 <script>
 var margin = {top: 20, right: 10, bottom: 10, left: 10};
@@ -135,13 +136,18 @@ d3.json(dataset_filename, function(dataset) {
       cell.style("stroke", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : 'black'; });
     }
     cell.append('title')
-      .text(function(d) { return nodes[d.y].name + " → " + nodes[d.x].name });
+      .text(function(d) { return "<div>" + nodes[d.x].name + "</div>" + " <span>depende de</span> " + "<div>" + nodes[d.y].name + "</div>" });
   }
 
   function mouseover(p) {
     d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
     d3.selectAll(".column text").classed("active", function(d, i) { return i == p.x; });
   }
+
+  jQuery('svg rect').tipsy({
+    gravity: 'w',
+    html: true,
+  });
 
   function mouseout() {
     d3.selectAll("text").classed("active", false);

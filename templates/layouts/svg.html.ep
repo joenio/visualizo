@@ -6,6 +6,7 @@
     <title><%= title %></title>
     %= stylesheet '/default.css'
     %= stylesheet '/svg.css'
+    %= stylesheet '/tipsy.css'
   </head>
   <body>
     <div class='container'>
