@@ -10,10 +10,13 @@
     <!--[if IE 7]>
       %= stylesheet '/font-awesome/css/font-awesome-ie7.min.css'
     <![endif]-->
-    %= stylesheet '/default.css'
     %= stylesheet '/application.css'
+    %= stylesheet '/tipsy.css'
     %= javascript '/jquery.min.js'
     %= javascript '/jquery.tipsy.js'
+    %= javascript '/bootstrap/js/bootstrap.min.js'
+    %= javascript '/application.js'
+    %= stylesheet '/default.css'
   </head>
   <body>
     <div class='container'>

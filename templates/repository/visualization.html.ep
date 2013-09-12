@@ -23,16 +23,6 @@
   </table>
 </div>
 
-
-<link href="http://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.3/example1/colorbox.min.css" rel="stylesheet">
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.5/jquery.scrollTo.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.3/jquery.colorbox-min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="application.js"></script>
-<script src="jquery.tipsy.js"></script>
-
 <script>
 var margin = {top: 20, right: 10, bottom: 10, left: 10};
 var width = height = $(window).height() - (margin.top + margin.bottom);

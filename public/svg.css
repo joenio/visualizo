@@ -1,8 +1,10 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: Verdana, sans-serif;
-  font-size: 14px;
+}
+
+.container {
+  width: 100%;
 }
 
 svg {
@@ -36,6 +38,10 @@ text.active {
   left: 0;
   bottom: 0;
   background: #f4f4f4;
-  opacity: 0.8;
+  opacity: 0.9;
   padding: 10px;
+}
+
+#order {
+  width: 100%;
 }
