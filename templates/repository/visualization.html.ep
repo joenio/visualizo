@@ -39,10 +39,13 @@ var x = d3.scale.ordinal().rangeBands([0, width]);
 var z = d3.scale.linear().domain([0, 4]).clamp(true);
 var c = d3.scale.category10().domain(d3.range(10));
 
+var density = Math.ceil((<%= $total_files %> / (height - margin.top - margin.bottom)) * 15);
+var dense = density > 5;
+
 var svg = d3.select("#content").append("svg");
 
 var matrix = svg.append("g")
-  .attr("class", "matrix")
+  .attr("class", function(d) { return dense ? "matrix dense" : "matrix"; })
   .attr("width", width)
   .attr("height", height)
   .attr("transform", "translate(" + ($(window).width() - width - margin.right) + "," + margin.top + ")");
@@ -50,9 +53,9 @@ var matrix = svg.append("g")
 var dataset_filename = "/json/<%= $url_sha1 %>/dsm";
 
 d3.json(dataset_filename, function(dataset) {
-  var elements = [],
-    nodes = dataset.nodes,
-    n = nodes.length;
+  var elements = [];
+  var nodes = dataset.nodes;
+  var n = nodes.length;
 
   // Compute index per node.
   nodes.forEach(function(node, i) {
@@ -97,7 +100,7 @@ d3.json(dataset_filename, function(dataset) {
     .attr("y", x.rangeBand() / 2)
     .attr("dy", ".32em")
     .attr("text-anchor", "end")
-    .text(function(d, i) { return nodes[i].name + " [" + i + "]"; });
+    .text(function(d, i) { return ((i % density == 0) ? nodes[i].name + " [" + i + "]" : ""); });
 
   var column = matrix.selectAll(".column")
     .data(elements)
@@ -109,12 +112,12 @@ d3.json(dataset_filename, function(dataset) {
     .attr("x1", -width);
 
   column.append("text")
-    .attr("x", 6)
-    .attr("y", x.rangeBand() / 2)
+    .attr("x", 2)
+    .attr("y", -10)
     .attr("dy", ".32em")
     .attr("text-anchor", "start")
-    .attr("transform", function(d, i) { return "translate(" + x(1) + ")rotate(90)"; })
-    .text(function(d, i) { return nodes[i].index; });
+    .attr("transform", function(d, i) { return "translate(0)rotate(90)"; })
+    .text(function(d, i) { return ((i % density == 0) ? nodes[i].index : ""); });
 
   function row(row) {
     var cell = d3.select(this).selectAll(".cell")
@@ -124,10 +127,12 @@ d3.json(dataset_filename, function(dataset) {
         .attr("x", function(d) { return x(d.x); })
         .attr("width", x.rangeBand())
         .attr("height", x.rangeBand())
-        .style("fill", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : null; })
-        //.style("stroke", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : null; })
+        .style("fill", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : 'black'; })
         .on("mouseover", mouseover)
         .on("mouseout", mouseout);
+    if (dense) {
+      cell.style("stroke", function(d) { return nodes[d.x].group == nodes[d.y].group ? c(nodes[d.x].group) : 'black'; });
+    }
     cell.append('title')
       .text(function(d) { return nodes[d.y].name + " → " + nodes[d.x].name });
   }
