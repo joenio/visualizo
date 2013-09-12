@@ -137,6 +137,7 @@ d3.json(dataset_filename, function(dataset) {
   function mouseover(p) {
     d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
     d3.selectAll(".column text").classed("active", function(d, i) { return i == p.x; });
+    d3.select(this).attr("class", "active");
   }
 
   $('svg rect').tipsy({
@@ -147,6 +148,7 @@ d3.json(dataset_filename, function(dataset) {
 
   function mouseout() {
     d3.selectAll("text").classed("active", false);
+    d3.selectAll("rect").classed("active", false);
   }
 
   function order(value) {
