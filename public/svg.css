@@ -32,6 +32,12 @@ text.active {
   fill: red;
 }
 
+rect.active {
+  stroke: red;
+  stroke-width: 3;
+  stroke-opacity: 0.5;
+}
+
 #sidebar {
   position: absolute;
   top: 0;
