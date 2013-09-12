@@ -52,3 +52,7 @@ text.active {
   border-radius: 15px;
   padding: 5px 10px;
 }
+
+rect.cell {
+  stroke-width: 2;
+}

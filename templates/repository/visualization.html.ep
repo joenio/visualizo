@@ -139,12 +139,6 @@ d3.json(dataset_filename, function(dataset) {
     d3.selectAll(".column text").classed("active", function(d, i) { return i == p.x; });
   }
 
-  $('svg rect').tipsy({
-    gravity: $.fn.tipsy.autoWE,
-    html: true,
-    opacity: 0.9,
-  });
-
   function mouseout() {
     d3.selectAll("text").classed("active", false);
   }
@@ -162,6 +156,12 @@ d3.json(dataset_filename, function(dataset) {
       .delay(function(d, i) { return x(i) * 4; })
       .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
   }
+
+  $('svg rect').tipsy({
+    gravity: $.fn.tipsy.autoWE,
+    html: true,
+    opacity: 0.9,
+  });
 
   d3.select("#order").on("change", function() {
     order(this.value);
