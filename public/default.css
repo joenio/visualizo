@@ -47,11 +47,13 @@ p.message {
   text-align: center;
 }
 
-.explore-link {
+.explore-link,
+.enqueue-link {
   line-height: 2em;
   padding-top: 0.8em;
 }
-.explore-link a {
+.explore-link a,
+.enqueue-link a {
   font-size: 1.2em;
 }
 

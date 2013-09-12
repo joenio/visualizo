@@ -11,3 +11,9 @@
   </li>
 % }
 </ul>
+
+<div class='enqueue-link'>
+  <%= link_to 'Cadastrar novo repositório' => 'home', class =>
+'btn
+btn-primary btn-small' %>
+</div>
