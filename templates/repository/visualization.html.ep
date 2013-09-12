@@ -5,7 +5,6 @@
   <select id="order">
     <option value="index">Ordenar pelo índice na matriz</option>
     <option value="name">Ordenar por ordem alfabética</option>
-    <option value="group">Ordenar por grupo (group)</option>
     <option value="directory">Ordenar por grupo (directory)</option>
   </select>
 
