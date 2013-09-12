@@ -134,9 +134,10 @@ d3.json(dataset_filename, function(dataset) {
     d3.selectAll(".column text").classed("active", function(d, i) { return i == p.x; });
   }
 
-  jQuery('svg rect').tipsy({
-    gravity: 'w',
+  $('svg rect').tipsy({
+    gravity: $.fn.tipsy.autoWE,
     html: true,
+    opacity: 0.9,
   });
 
   function mouseout() {
