@@ -13,6 +13,15 @@ sub enqueue {
   );
 }
 
+sub explore {
+  my $self = shift;
+  my @repositories = CodeJuicer::DB->c('repositories')->find()->all;
+  my %repositories_list = map { $_->{_id} => $_->{url} } @repositories;
+  $self->stash(
+    repositories => \%repositories_list,
+  );
+}
+
 sub visualization {
   my $self = shift;
   my $url_sha1 = $self->param('url_sha1');

@@ -1,0 +1,13 @@
+% title 'Explore Repositories';
+
+<h1>Repositórios</h1>
+
+<ul class='unstyled'>
+% while (my ($url_sha1, $url) = each $repositories) {
+  <li>
+    <%= link_to $url_sha1 => visualization => {url_sha1 => $url_sha1} %>
+    <br/>
+    <em><%= $url %></em>
+  </li>
+% }
+</ul>

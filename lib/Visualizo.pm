@@ -19,11 +19,15 @@ sub startup {
   # Normal route to controller
   $r->get('/')
     ->name('home')
-    ->to('repository#new_url');
+    ->to('repository#enqueue_form');
 
   $r->get('/enqueue')
     ->name('enqueue')
     ->to('repository#enqueue');
+
+  $r->get('/explore')
+    ->name('explore')
+    ->to('repository#explore');
 
   $r->get('/json/:url_sha1/:action')
     ->to('json#dsm');

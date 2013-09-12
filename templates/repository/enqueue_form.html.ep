@@ -4,3 +4,9 @@
   %= url_field 'url', autofocus => undef, required => undef, placeholder => 'Digite a URL do repositório',
   %= submit_button 'Cadastrar repositório', class => 'btn btn-primary btn-block btn-large'
 % end
+
+<div class='explore-link'>
+  <span class='or'>ou</span>
+  <br/>
+  <%= link_to 'Explorar repositórios' => 'explore' %>
+</div>
