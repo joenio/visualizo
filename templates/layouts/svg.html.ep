@@ -12,7 +12,7 @@
     <![endif]-->
     %= stylesheet '/application.css'
     %= stylesheet '/tipsy.css'
-    %= javascript '/jquery.min.js'
+    %= javascript '/jquery-1.10.2.min.js'
     %= javascript '/jquery.tipsy.js'
     %= javascript '/bootstrap/js/bootstrap.min.js'
     %= javascript '/d3.v3.min.js'

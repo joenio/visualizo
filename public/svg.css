@@ -72,3 +72,8 @@ rect.cell {
   stroke: #fff;
   shape-rendering: crispEdges;
 }
+
+.cell.selected {
+  stroke: gray !important;
+  fill: gray !important;
+}

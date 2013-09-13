@@ -35,6 +35,8 @@ var x = d3.scale.ordinal().rangeBands([0, width]);
 var z = d3.scale.linear().domain([0, 4]).clamp(true);
 var c = d3.scale.category10().domain(d3.range(10));
 
+var y = d3.scale.ordinal().rangeBands([0, height]);
+
 var density = Math.ceil((<%= $total_files %> / (height - margin.top - margin.bottom)) * 15);
 var dense = density > 5;
 
@@ -46,17 +48,17 @@ var matrix = svg.append("g")
   .attr("height", height)
   .attr("transform", "translate(" + ($(window).width() - width - margin.right) + "," + margin.top + ")");
 
-var brush = d3.svg.brush()
-  .x(d3.scale.identity().domain([0, width]))
-  .y(d3.scale.identity().domain([0, height]))
-  .extent([[100, 100], [200, 200]]);
-
 var dataset_filename = "/json/<%= $url_sha1 %>/dsm";
 
 d3.json(dataset_filename, function(dataset) {
   var elements = [];
   var nodes = dataset.nodes;
   var n = nodes.length;
+
+  var brush = d3.svg.brush()
+    .x(x)
+    .y(y)
+    .on("brush", brush);
 
   // Compute index per node.
   nodes.forEach(function(node, i) {
@@ -79,6 +81,7 @@ d3.json(dataset_filename, function(dataset) {
 
   // The default sort order.
   x.domain(orders.index);
+  y.domain(orders.index);
 
   matrix.append("rect")
     .attr("class", "background")
@@ -165,6 +168,19 @@ d3.json(dataset_filename, function(dataset) {
     t.selectAll(".column")
       .delay(function(d, i) { return x(i) * 4; })
       .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
+  }
+
+  // Highlight the selected rects.
+  function brush(p) {
+    var e = brush.extent();
+    matrix.selectAll("rect.cell").classed("selected", function(d) {
+      var w = d3.select(this).attr('width');
+      var h = d3.select(this).attr('height');
+      var d_x = Number(x(d.x)) + Number(w);
+      var d_y = Number(y(d.y)) + Number(h);
+      return e[0][0] <= x(d.x) && d_x < e[1][0]
+          && e[0][1] <= y(d.y) && d_y < e[1][1];
+    });
   }
 
   $('svg rect').tipsy({
